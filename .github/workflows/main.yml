@@ -2,13 +2,7 @@
 
 name: CI
 
-# Controls when the action will run. 
-on:
-  # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [push, pull_request]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -23,20 +17,19 @@ jobs:
     env:
       working-directory: ./CI
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     
       - uses: actions/checkout@master
-      # Runs a single command using the runners shell
+
       - name: compile
         run: ./compile.sh
         working-directory: ${{env.working-directory}}
         
-      # Runs a set of commands using the runners shell
       - name: test
         run: ./test.sh
         working-directory: ${{env.working-directory}}
       
       - name: deploy
+        if: github.ref == 'refs/head/master'
         run: ./deploy.sh
         working-directory: ${{env.working-directory}}
