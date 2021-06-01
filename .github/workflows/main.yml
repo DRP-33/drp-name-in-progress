@@ -30,10 +30,13 @@ jobs:
       # Runs a single command using the runners shell
       - name: compile
         run: ./compile.sh
-
+        working-directory: ${{env.working-directory}}
+        
       # Runs a set of commands using the runners shell
       - name: test
         run: ./test.sh
-        
+        working-directory: ${{env.working-directory}}
+      
       - name: deploy
         run: ./deploy.sh
+        working-directory: ${{env.working-directory}}
