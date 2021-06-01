@@ -1,1 +1,2 @@
-echo "test job"
+cd ../website
+python manage.py test
