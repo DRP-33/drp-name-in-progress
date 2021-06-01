@@ -7,7 +7,7 @@ on: [push, pull_request]
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  build_and_test:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -25,8 +25,17 @@ jobs:
       - name: test
         run: ./test.sh
         working-directory: ${{env.working-directory}}
-      
+
+  deploy:
+    needs: build_and_test
+    if: github.ref == 'refs/head/master'
+
+    runs-on: ubuntu-latest
+    
+    env:
+      working-directory: ./CI
+
+    steps:
       - name: deploy
-        if: github.ref == 'refs/head/master'
         run: ./deploy.sh
         working-directory: ${{env.working-directory}}
