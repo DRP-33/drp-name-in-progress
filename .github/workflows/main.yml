@@ -35,7 +35,7 @@ jobs:
 
   deploy:
     needs: build_and_test
-    if: github.ref == 'refs/head/master'
+    #uncomment after testing  if: github.ref == 'refs/head/master'
 
     runs-on: ubuntu-latest
     
