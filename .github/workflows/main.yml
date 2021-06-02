@@ -1,0 +1,52 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+on: [push, pull_request]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+
+    env:
+      working-directory: ./CI
+
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Set up Python
+        uses: actions/setup-python@master
+        with:
+          python-version: 3.8
+
+      - name: Set up Environment
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r ./CI/requirements.txt
+        
+      - name: test
+        run: ./test.sh
+        working-directory: ${{env.working-directory}}
+
+  deploy:
+    needs: build_and_test
+    if: github.ref == 'refs/head/main'
+
+    runs-on: ubuntu-latest
+    
+    env:
+      working-directory: ./
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2 
+      - name: Deploy
+        id: heroku
+        uses: jctaveras/heroku-deploy@v2.1.3
+        with:
+          api_key: ${{secrets.HEROKU_API_KEY}}
+          app_name: "drp-33"
+          email: "m.kaszlewicz@gmail.com"
+          dockerfile_path: ${{env.working-directory}}
+          
