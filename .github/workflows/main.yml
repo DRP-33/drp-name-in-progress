@@ -52,5 +52,5 @@ jobs:
           api_key: ${{secrets.HEROKU_API_KEY}}
           app_name: "drp-33"
           email: "m.kaszlewicz@gmail.com"
-          dockerfile_path: ""
+          dockerfile_path: ${{env.working-directory}}
           
