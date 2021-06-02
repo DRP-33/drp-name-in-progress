@@ -10,4 +10,3 @@ COPY website /webapp/backend
 RUN pip install -r requirements.txt
 
 EXPOSE 5000
-CMD ["python", "backend/manage.py", "runserver"]
