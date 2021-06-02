@@ -43,11 +43,14 @@ jobs:
       working-directory: ./CI
 
     steps:
-      - uses: actions/checkout@v2
-      - uses:  akhileshns/heroku-deploy@v3.12.12
+      - name: Checkout
+        uses: actions/checkout@v2 
+      - name: Deploy
+        id: heroku
+        uses: jctaveras/heroku-deploy@v1.0.0
         with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "drp-33"
-          heroku_email: "m.kaszlewicz@gmail.com"
-          usedocker: true
+          api_key: ${{secrets.HEROKU_API_KEY}}
+          app_name: "drp-33"
+          email: "m.kaszlewicz@gmail.com"
+          dockerfile_path: "../../CI"
           
