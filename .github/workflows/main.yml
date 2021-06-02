@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      working-directory: ./CI
+      working-directory: ./
 
     steps:
       - name: Checkout
