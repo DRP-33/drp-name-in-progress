@@ -9,4 +9,4 @@ COPY website /webapp/backend
 
 RUN pip install -r ../requirements.txt
 
-CMD ["gunicorn", "backend.website.wsgi"]
+CMD ["gunicorn", "website.wsgi"]
