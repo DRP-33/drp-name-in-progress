@@ -30,7 +30,6 @@ jobs:
         working-directory: ${{env.working-directory}}
         
       - name: test
-        needs: Set up Django
         run: ./test.sh
         working-directory: ${{env.working-directory}}
 
