@@ -1,0 +1,1 @@
+web: python backend/website/manage.py runserver

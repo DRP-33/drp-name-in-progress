@@ -1,9 +1,12 @@
-FROM python:3.4
+FROM python:3.8
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        postgresql-client \
-    && rm -rf /var/lib/apt/lists/*
+ENV PYTHONUNBUFFERED=1
 
-WORKDIR /usr/src/app
-RUN pip install Django
+WORKDIR /webapp
+
+COPY requirements.txt /webapp/
+COPY ../website /webapp/backend
+
+RUN pip install -r requirements.txt
+
+EXPOSE 5000
