@@ -31,7 +31,7 @@ jobs:
 
   deploy:
     needs: build_and_test
-    if: github.ref == 'refs/head/master'
+    if: github.ref == 'refs/head/main'
 
     runs-on: ubuntu-latest
     
