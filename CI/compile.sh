@@ -1,1 +1,0 @@
-echo "compile job"
