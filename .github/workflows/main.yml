@@ -52,6 +52,7 @@ jobs:
   
   deploy-frontend:
     needs: build_and_test
+    needs: deploy-backend
     if: github.ref == 'refs/heads/main'
 
     runs-on: ubuntu-latest
