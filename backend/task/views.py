@@ -40,4 +40,4 @@ def add_task(request):
   return HttpResponse(f"OK, id = {task.id}", status=200)
 
 def get_tasks(request):
-  return HttpResponse(f"{Users.objects.all().values()}", status=200)
+  return HttpResponse(f"{Task.objects.all().values()}", status=200)
