@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.core import serializers
 from .models import Task
 # Create your views here.
 
@@ -40,7 +41,7 @@ def add_task(request):
   return HttpResponse(f"OK, id = {task.id}", status=200)
 
 def get_tasks(request):
-  return HttpResponse(f"{Task.objects.all().values()}", status=200)
+  return HttpResponse(f"{serializers.serialize('json', Task.objects.all().values())}", status=200)
 
 def accept_task(request):
   try:

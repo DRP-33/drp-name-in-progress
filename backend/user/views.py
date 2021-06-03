@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import User
 from django.http import HttpResponse
+from django.core import serializers
 from django.contrib.auth.hashers import make_password
 HASHER = 'md5'
 # Create your views here.
@@ -18,4 +19,4 @@ def add_user(request):
   return HttpResponse(f"OK, id={user.id}", status=200)
 
 def get_users(request):
-  return HttpResponse(f"{User.objects.all().values()}", status=200)
+  return HttpResponse(f"{serializers.serialize('json', User.objects.all().values())}", status=200)
