@@ -1,5 +1,6 @@
 import React from 'react';
 //import ReactDOM from 'react-dom'
+import api from '../api/api'
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 const containerStyle = {
@@ -22,14 +23,6 @@ const position = {
 }
 const details = "These are some bits of tasks details"
 
-// For now auto-accepts, for later will display overlay and ask to accept
-function onClick() {
-    document.getElementById("task text").innerText = details
-    // acceptRequest()
-    // retrieve info for pin and replace with this
-
-    return
-}
 
 /*function onLoad() {
     const marker = new Marker({
@@ -47,6 +40,8 @@ function onClick() {
 //do we want a "load tasks in this area" when someone stops dragging e.g. onDragEnd
 //probably onLoad needs to get tasks
 function MapComponent() {
+    const data = api.getTask();
+    console.log(data);
     return (
         <LoadScript googleMapsApiKey = "AIzaSyDQmclEsdFsHCs6sjDjBxBF-KNX-GcGCDg" >
             <GoogleMap
@@ -56,10 +51,18 @@ function MapComponent() {
                 zoom = { 15 }
                 clickableIcons = { false }
             >
-                <Marker key={key} position={position} onClick={onClick}/>
+                <Marker key={key} position={position} onClick={() => onClick(key)}/>
             </GoogleMap>
         </LoadScript>
     )
 }
+
+// For now auto-accepts, for later will display overlay and ask to accept
+function onClick(key) {
+    console.log(key);
+    api.acceptTask(key);
+    document.getElementById('task_text').innerText = details;
+}
+
 
 export default MapComponent;
