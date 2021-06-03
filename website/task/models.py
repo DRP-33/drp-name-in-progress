@@ -6,6 +6,8 @@ class Task(models.Model):
   description = models.TextField()
   date = models.DateField(auto_now_add=True)  # should be set to date at creation of object automatically
   acceptor_id = models.BigIntegerField(blank=True)
+  latitude = models.DecimalField(max_digits=10, decimal_places=6, blank=True)
+  longitude = models.DecimalField(max_digits=10, decimal_places=6, blank=True)
   title = models.CharField(max_length=50, blank=True)
   phone_number = models.CharField(max_length=16, blank=True)
   store_addr = models.CharField(max_length=100, blank=True)

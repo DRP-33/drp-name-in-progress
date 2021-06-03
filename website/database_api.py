@@ -23,15 +23,18 @@ def add_user(username, email, password, date):
 #'SP': Supplies
 #'OT': Others
 def add_task(requestor_id, description, date, acceptor_id, task_type,
-  title='', phone_number='', store_addr='', delivery_addr=''):
+  title='', phone_number='', store_addr='', delivery_addr='', longitude=0.0,
+  latitude=0.0):
   task = Task()
   task.requestor_id = requestor_id
   task.description = description
   task.date = date
   task.acceptor_id = acceptor_id
-  task.task_type = task_type
+  task.t_type = task_type
   task.title = title
   task.phone_number = phone_number
   task.store_addr = store_addr
   task.delivery_addr = delivery_addr
+  task.longitude = longitude
+  task.latitude = latitude
   task.save()
