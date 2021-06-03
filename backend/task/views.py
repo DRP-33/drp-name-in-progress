@@ -45,8 +45,8 @@ def get_tasks(request):
 
 def accept_task(request):
   try:
-    id = request.data["id"]
-    acceptor_id = request.data["acceptor_id"]
+    id = request.POST["id"]
+    acceptor_id = request.POST["acceptor_id"]
     task = Task.objects.get(pk=id)
     task.acceptor_id = acceptor_id
     return HttpResponse("OK", status=200)
