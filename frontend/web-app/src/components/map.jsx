@@ -1,49 +1,35 @@
 import React from 'react';
-//import ReactDOM from 'react-dom'
 import api from '../api/api'
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
+// container style
 const containerStyle = {
     width: '80%',
     height: '100vh',
     float: 'right'
 };
 
-// need this to be CURRENT LOCATION/user's default address?
+//center of a map
 const center = {
     lat: 51.49954166513176,
     lng: -0.17449287744865882
 };
 
-//NEED TO GET DETAILS, POSITION AND KEY FROM DB
-const key = 1
-const position = {
-    lat: 51.501169613351145,
-    lng: -0.18215957215504935  
-}
-const details = "These are some bits of tasks details"
-
-
-/*function onLoad() {
-    const marker = new Marker({
-        key: 1,
-        position: { lat: 51.501169613351145, lng: -0.18215957215504935},
-        //icon: "../assets/image.jpg",
-        map: document.getElementById("map"),
-        clickable: true,
-        visible: true
-    });
-    console.log(marker)
-    //ReactDOM.render(marker, document.getElementById("root"));
-}*/
-
-//do we want a "load tasks in this area" when someone stops dragging e.g. onDragEnd
-//probably onLoad needs to get tasks
+// functional map component
 function MapComponent() {
-    const data = api.getTask();
-    console.log(data);
+    let [key, setKey] = React.useState(0);
+    let [message, setMessage] = React.useState('');
+    let [position, setPosition] = React.useState({lat: 0, lng: 0});
+    React.useEffect(() => {
+        api.getTask().then(function (response){
+            setKey(response.data[0].pk);
+            setMessage(response.data[0].fields.description);
+            setPosition({lat: parseFloat(response.data[0].fields.s_latitude), lng: parseFloat(response.data[0].fields.s_longitude)})
+        });
+    }, []);
+
     return (
-        <LoadScript googleMapsApiKey = "AIzaSyDQmclEsdFsHCs6sjDjBxBF-KNX-GcGCDg" >
+        <LoadScript googleMapsApiKey = {process.env.REACT_APP_API_KEY} >
             <GoogleMap
                 id = { "map" }
                 mapContainerStyle = { containerStyle }
@@ -51,17 +37,23 @@ function MapComponent() {
                 zoom = { 15 }
                 clickableIcons = { false }
             >
-                <Marker key={key} position={position} onClick={() => onClick(key)}/>
+                <Marker 
+                key = {key} 
+                position={position} 
+                onClick={() => onClick(key, message)}/>
             </GoogleMap>
         </LoadScript>
     )
 }
 
 // For now auto-accepts, for later will display overlay and ask to accept
-function onClick(key) {
-    console.log(key);
-    api.acceptTask(key);
-    document.getElementById('task_text').innerText = details;
+function onClick(key, message) {
+    var formData = new FormData();
+    formData.append('id', '3');
+    formData.append('acceptor_id', '1');
+    api.acceptTask(formData);
+    
+    document.getElementById('task_text').innerText = message;
 }
 
 

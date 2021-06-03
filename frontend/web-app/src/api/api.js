@@ -2,7 +2,9 @@ import axios from 'axios'
 
 const instance = axios.create({
     baseURL: 'https://drp-33.herokuapp.com',
-    headers: {}
+    headers: {
+        "Access-Control-Allow-Origin": "*"
+    }
 });
 
 const api = {
@@ -11,13 +13,11 @@ const api = {
         'method':'GET',
         'url': '/tasks'
     }),
-    acceptTask: (key) =>
+    acceptTask: (data) =>
     instance({
-        'method': 'POST',
-        'url': '/task_a',
-        'data': {
-            'id': 'key'
-        }
+        'method': 'post',
+        'url': '/task_a/',
+        'data': data
     })
 }
 

@@ -16,7 +16,8 @@ const headingStyle = {
     lineHeight: "63px",
     alignItems: "center",
     textAlign: "center",
-    color: "#FFFFFF"
+    color: "#FFFFFF",
+    padding: "2%"
 }
 
 const bodyStyle = {
@@ -27,14 +28,15 @@ const bodyStyle = {
     lineHeight: "25px",
     alignItems: "center",
     textAlign: "center",
-    color: "#FFFFFF"
+    color: "#FFFFFF",
+    padding: "2%"
 }
 
 function Sidebar() {
     return (
         <div style={ sidebarStyle }>
             <h1 style={ headingStyle }>My tasks</h1>
-            <h2 id="task_text" style={ bodyStyle }>text</h2>
+            <h2 id="task_text" style={ bodyStyle }></h2>
         </div>
     )
 };
