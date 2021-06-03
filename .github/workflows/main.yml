@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      working-directory: ./backend/
+      working-directory: backend/
 
     steps:
       - name: Checkout
@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      working-directory: ./frontend/
+      working-directory: frontend/
 
     steps:
       - name: Checkout
