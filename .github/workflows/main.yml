@@ -51,7 +51,7 @@ jobs:
           dockerfile_path: ${{env.working-directory}}
   
   deploy-frontend:
-    needs: [build_adn_test, deploy-backend]
+    needs: [build_and_test, deploy-backend]
     if: github.ref == 'refs/heads/main'
 
     runs-on: ubuntu-latest
