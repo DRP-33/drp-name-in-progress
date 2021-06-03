@@ -1,0 +1,26 @@
+from django.db import models
+
+# Create your models here.
+class Task(models.Model):
+  requestor_id = models.BigIntegerField()
+  description = models.TextField()
+  date = models.DateField(auto_now_add=True)  # should be set to date at creation of object automatically
+  acceptor_id = models.BigIntegerField(blank=True)
+  title = models.CharField(max_length=50, blank=True)
+  phone_number = models.CharField(max_length=16, blank=True)
+  store_addr = models.CharField(max_length=100, blank=True)
+  delivery_addr = models.CharField(max_length=100, blank=True)
+
+  #task types
+  PHONE_CALL = 'PC'
+  SUPPLIES = 'SP'
+  OTHERS = 'OT'
+  TYPES_CHOICES = [
+    (PHONE_CALL, 'Phone Call'),
+    (SUPPLIES, 'Supplies'),
+    (OTHERS, 'others'),
+  ]
+  t_type = models.CharField(
+    max_length=2,
+    choices=TYPES_CHOICES,
+    default=OTHERS)
