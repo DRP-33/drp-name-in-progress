@@ -41,3 +41,13 @@ def add_task(request):
 
 def get_tasks(request):
   return HttpResponse(f"{Task.objects.all().values()}", status=200)
+
+def accept_task(request):
+  try:
+    id = request.data["id"]
+    acceptor_id = request.data["acceptor_id"]
+    task = Task.objects.get(pk=id)
+    task.acceptor_id = acceptor_id
+    return HttpResponse("OK", status=200)
+  except:
+    return HttpResponse(":(", status=400)

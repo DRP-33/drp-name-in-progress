@@ -16,12 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from user.views import add_user, get_users
-from task.views import add_task, get_tasks
+from task.views import add_task, get_tasks, accept_task
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('task_c/', add_task),
     path('user_c/', add_user),
     path('users/', get_users),
-    path('tasks/', get_tasks)
+    path('tasks/', get_tasks),
+    path('task_a', accept_task)
 ]
