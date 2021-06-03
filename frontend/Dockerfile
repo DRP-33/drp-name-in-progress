@@ -1,7 +1,7 @@
 FROM node:14
 
-WORKDIR /webapp/frontend/webapp
-COPY frontend /webapp/frontend
+WORKDIR /webapp/frontend/web-app
+COPY web-app /webapp/frontend/web-app
 
 RUN npm install
 CMD ["npm", "start"]
