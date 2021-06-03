@@ -13,11 +13,12 @@ def add_task(request):
     task.requestor_id = request.data["requestor_id"]
     task.description = request.data["description"]
     task.date = request.data["date"]
-    task.acceptor_id = request.data["acceptor_id"]
     task.t_type = request.data["task_type"]
   except:
     return HttpResponse("missing data", status=400)
   
+  if "acceptor_id" in request.data:
+    task.acceptor_id = request.data["acceptor_id"]
   if "title" in request.data:
     task.title = request.data["title"]
   if "phone_number" in request.data:
@@ -37,3 +38,6 @@ def add_task(request):
   
   task.save()
   return HttpResponse(f"OK, id = {task.id}", status=200)
+
+def get_tasks(request):
+  return HttpResponse(f"{Users.objects.all().values()}", status=200)

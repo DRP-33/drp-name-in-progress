@@ -17,3 +17,6 @@ def add_user(request):
     return HttpResponse("Data missing", status=400)
     
   return HttpResponse(f"OK, id={user.id}", status=200)
+
+def get_users(request):
+  return HttpResponse(f"{Users.objects.all().values()}", status=200)
