@@ -17,7 +17,7 @@ def add_user(username, email, password, date):
   user.date = date
   user.password = make_password(password, hasher=HASHER)
   user.save()
-  user.id
+  return user.id
 
 #task types are:
 #'PC': Phone Call
@@ -41,4 +41,7 @@ def add_task(requestor_id, description, date, acceptor_id, task_type,
   task.d_longitude = d_longitude
   task.d_latitude = d_latitude
   task.save()
-  task.id
+  return task.id
+
+def get_tasks():
+  return Task.objects.all()
