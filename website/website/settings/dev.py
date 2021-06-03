@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    #own
+    'task',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -100,6 +104,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+#passwird hashers
+
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.MD5PasswordHasher',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
