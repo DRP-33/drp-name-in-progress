@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core import serializers
-from django.views.decorators.csrf import csrf_protect
 from .models import Task
 # Create your views here.
 
@@ -45,7 +44,6 @@ def add_task(request):
 def get_tasks(request):
   return HttpResponse(f"{serializers.serialize('json', Task.objects.all())}", status=200)
 
-@csrf_protect
 def accept_task(request):
   try:
     id = request.data["id"]
