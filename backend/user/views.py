@@ -10,7 +10,6 @@ def add_user(request):
     user = User()
     user.name = request.data["name"]
     user.email = request.data["email"]
-    user.date = request.data["date"]
     user.password = make_password(request.data["password"], hasher=HASHER)
     user.save()
   except:
