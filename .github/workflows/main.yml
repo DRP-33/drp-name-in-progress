@@ -29,14 +29,35 @@ jobs:
         run: ./test.sh
         working-directory: ${{env.working-directory}}
 
-  deploy:
+  deploy-backend:
     needs: build_and_test
     if: github.ref == 'refs/heads/main'
 
     runs-on: ubuntu-latest
     
     env:
-      working-directory: ./
+      working-directory: ./backend/
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2 
+      - name: Deploy
+        id: heroku
+        uses: jctaveras/heroku-deploy@v2.1.3
+        with:
+          api_key: ${{secrets.HEROKU_API_KEY}}
+          app_name: "drp-33"
+          email: "m.kaszlewicz@gmail.com"
+          dockerfile_path: ${{env.working-directory}}
+  
+  deploy-frontend:
+    needs: build_and_test
+    if: github.ref == 'refs/heads/main'
+
+    runs-on: ubuntu-latest
+    
+    env:
+      working-directory: ./frontend/
 
     steps:
       - name: Checkout
