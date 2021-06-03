@@ -8,7 +8,6 @@ from .models import Task
 #'PC': Phone Call
 #'SP': Supplies
 #'OT': Others
-@csrf_protect
 def add_task(request):
   try:
     task = Task()
