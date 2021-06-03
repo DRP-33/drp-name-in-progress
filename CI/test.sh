@@ -1,2 +1,2 @@
-cd ../website
+cd ../backend
 python manage.py test
