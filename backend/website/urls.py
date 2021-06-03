@@ -24,5 +24,5 @@ urlpatterns = [
     path('user_c/', add_user),
     path('users/', get_users),
     path('tasks/', get_tasks),
-    path('task_a', accept_task)
+    path('task_a/', accept_task)
 ]
