@@ -2,10 +2,11 @@ from django.shortcuts import render
 from .models import User
 from django.http import HttpResponse
 from django.core import serializers
+from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.hashers import make_password
 HASHER = 'md5'
 # Create your views here.
-
+@csrf_protect
 def add_user(request):
   try:
     user = User()
