@@ -4,7 +4,7 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /webapp/backend
 
-COPY requirements.txt /webapp/
+COPY CI/requirements.txt /webapp/
 COPY backend /webapp/backend
 
 RUN pip install -r ../requirements.txt
