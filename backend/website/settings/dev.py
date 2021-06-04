@@ -28,13 +28,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
-CORS_ORIGIN_WHITELIST = (
-    'https://drp-33-frontend.herokuapp.com'
-)
 
-# CORS_ALLOWED_ORIGINS = [
-#         'https://drp-33-frontend.herokuapp.com',
-#     ]
+CORS_ALLOWED_ORIGINS = [
+        'https://drp-33-frontend.herokuapp.com',
+    ]
 
 CSRF_TRUSTED_ORIGINS = [
         'https://drp-33-frontend.herokuapp.com',
