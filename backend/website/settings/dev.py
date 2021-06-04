@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
+SECURE_REFERRER_POLICY = "no-referrer-when-downgrade"
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'corsheaders',
     #own
     'task',
     'user',
