@@ -1,2 +1,2 @@
-cd ../backend/backend
+cd ../backend
 python manage.py test
