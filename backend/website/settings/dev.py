@@ -36,6 +36,10 @@ CSRF_TRUSTED_ORIGINS = [
         'https://drp-33-frontend.herokuapp.com/',
     ]
 
+CORS_ORIGIN_WHITELIST = [
+    'https://drp-33-frontend.herokuapp.com/',
+]    
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -46,6 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'corsheaders',
+
     #own
     'task',
     'user',
@@ -53,6 +59,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
