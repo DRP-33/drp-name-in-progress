@@ -28,7 +28,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
-SECURE_REFERRER_POLICY = "no-referrer-when-downgrade"
+CORS_ALLOWED_ORIGINS = [
+        'https://drp-33-frontend.herokuapp.com/',
+    ]
+
+CSRF_TRUSTED_ORIGINS = [
+        'https://drp-33-frontend.herokuapp.com/',
+    ]
 
 # Application definition
 
