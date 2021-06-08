@@ -1,21 +1,30 @@
-from django.shortcuts import render
-from .models import User
-from django.http import HttpResponse
-from django.core import serializers
-from django.contrib.auth.hashers import make_password
-HASHER = 'md5'
-# Create your views here.
-def add_user(request):
-  try:
-    user = User()
-    user.name = request.data["name"]
-    user.email = request.data["email"]
-    user.password = make_password(request.data["password"], hasher=HASHER)
-    user.save()
-  except:
-    return HttpResponse("Data missing", status=400)
-    
-  return HttpResponse(f"OK, id={user.id}", status=200)
+import json
+import sys
 
-def get_users(request):
-  return HttpResponse(f"{serializers.serialize('json', User.objects.all())}", status=200)
+from django.contrib.auth.models import User
+from django.http import HttpResponse, JsonResponse
+from rest_framework.decorators import api_view
+from rest_framework.authtoken.models import Token
+from utils import is_valid_request
+
+@api_view(['POST'])
+def create_user(request):
+  data = request.POST
+  required_data = ['user_name', 'user_email', 'user_password']
+  if not is_valid_request(data, required_data):
+    return HttpResponse("missing data", status=400)
+
+  if User.objects.filter(email=data['user_email']).exists():
+    return HttpResponse('email already in use', status = 409)
+
+  user = User.objects.create_user(data['user_name'], data['user_email'],
+    data['user_password'])
+  user.save()
+
+  token = Token.objects.create(user = user)
+
+  response_data = {}
+  response_data['id'] = user.id
+  response_data['token'] = token.key
+
+  return JsonResponse(response_data)

@@ -15,14 +15,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from user.views import add_user, get_users
 from task.views import add_task, get_tasks, accept_task
+from user.views import create_user
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    #get user token
+    path('api-token-auth/', obtain_auth_token),
+
+    #create task/get tasks/accept task
     path('task_c/', add_task),
-    path('user_c/', add_user),
-    path('users/', get_users),
     path('tasks/', get_tasks),
-    path('task_a/', accept_task)
+    path('task_a/', accept_task),
+
+    #create user
+    path('user_c/', create_user),
 ]

@@ -1,6 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core import serializers
+from rest_framework.authtoken.models import Token
+from rest_framework.authentication import BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view,\
+ authentication_classes, permission_classes
 from .models import Task
 # Create your views here.
 
@@ -42,6 +47,15 @@ def add_task(request):
 
 def get_tasks(request):
   return HttpResponse(f"{serializers.serialize('json', Task.objects.all())}", status=200)
+
+@api_view(['GET'])
+@authentication_classes([BasicAuthentication])
+@permission_classes([IsAuthenticated])
+def get_my_tasks(request):
+  user_id = Token.objects.get(key=request.token).user_id
+  my_tasks = Task.objects.filter(acceptor_id=user_id)
+  serialized_tasks = serializers.serialize('json', my_tasks)
+  return HttpResponse(serialized_tasks, status=200)
 
 def accept_task(request):
   try:
