@@ -2,67 +2,94 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.core import serializers
 from rest_framework.authtoken.models import Token
-from rest_framework.authentication import BasicAuthentication
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view,\
  authentication_classes, permission_classes
 from .models import Task
+from utils import is_valid_request
 # Create your views here.
 
 #task types are:
 #'PC': Phone Call
 #'SP': Supplies
 #'OT': Others
+@api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def add_task(request):
-  try:
-    task = Task()
-    task.requestor_id = request.data["requestor_id"]
-    task.description = request.data["description"]
-    task.date = request.data["date"]
-    task.t_type = request.data["task_type"]
-  except:
+  required_fields = ['description', 'date', 'task_type']
+  request_data = request.POST
+
+  if not is_valid_request(request_data, required_fields):
     return HttpResponse("missing data", status=400)
+
+  task = Task()
+  task.requestor_id = request.user.id
+  task.description = request_data["description"]
+  task.date = request_data["date"]
+  task.t_type = request_data["task_type"]
+
   
-  if "acceptor_id" in request.data:
-    task.acceptor_id = request.data["acceptor_id"]
-  if "title" in request.data:
-    task.title = request.data["title"]
-  if "phone_number" in request.data:
-    task.phone_number = request.data["phone_number"]
-  if "store_addr" in request.data:
-    task.store_addr = request.data["store_addr"]
-  if "delivery_addr" in request.data:
-    task.delivery_addr = request.data["delivery_addr"]
-  if "s_longitude" in request.data:
-    task.s_longitude = request.data["s_longitude"]
-  if "s_latitude" in request.data:
-    task.s_latitude = request.data["s_latitude"]
-  if "d_longitude" in request.data:
-    task.d_longitude = request.data["d_longitude"]
-  if "d_latitude" in request.data:
-    task.d_latitude = request.data["d_latitude"]
+  if "acceptor_id" in request_data:
+    task.acceptor_id = request_data["acceptor_id"]
+  if "title" in request_data:
+    task.title = request_data["title"]
+  if "phone_number" in request_data:
+    task.phone_number = request_data["phone_number"]
+  if "store_addr" in request_data:
+    task.store_addr = request_data["store_addr"]
+  if "delivery_addr" in request_data:
+    task.delivery_addr = request_data["delivery_addr"]
+  if "s_longitude" in request_data:
+    task.s_longitude = request_data["s_longitude"]
+  if "s_latitude" in request_data:
+    task.s_latitude = request_data["s_latitude"]
+  if "d_longitude" in request_data:
+    task.d_longitude = request_data["d_longitude"]
+  if "d_latitude" in request_data:
+    task.d_latitude = request_data["d_latitude"]
   
   task.save()
   return HttpResponse(f"OK, id = {task.id}", status=200)
 
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def get_tasks(request):
   return HttpResponse(f"{serializers.serialize('json', Task.objects.all())}", status=200)
 
 @api_view(['GET'])
-@authentication_classes([BasicAuthentication])
+@authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def get_my_tasks(request):
-  user_id = Token.objects.get(key=request.token).user_id
+  user_id = request.user.id
+  my_tasks = Task.objects.filter(requestor_id=user_id)
+  serialized_tasks = serializers.serialize('json', my_tasks)
+  return HttpResponse(serialized_tasks, status=200)
+
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_my_accepted_tasks(request):
+  user_id = request.user.id
   my_tasks = Task.objects.filter(acceptor_id=user_id)
   serialized_tasks = serializers.serialize('json', my_tasks)
   return HttpResponse(serialized_tasks, status=200)
 
+@api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def accept_task(request):
-  try:
-    id = request.POST["id"]
-    acceptor_id = request.POST["acceptor_id"]
-    task = Task.objects.get(pk=id)
-    task.acceptor_id = acceptor_id
-    return HttpResponse("OK", status=200)
-  except:
-    return HttpResponse(":(", status=400)
+  required_fields = ['task_id']
+  request_data = request.POST
+
+  if not is_valid_request(request_data, required_fields):
+    return HttpResponse("missing data", status=400)
+
+  id = request_data["task_id"]
+  acceptor_id = request.user.id
+  task = Task.objects.get(pk=id)
+  task.acceptor_id = acceptor_id
+  task.save()
+  return HttpResponse("OK", status=200)
