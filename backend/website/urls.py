@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from task.views import add_task, get_tasks, accept_task, get_my_tasks, get_my_accepted_tasks
 from user.views import create_user
+from raiting.views import get_user_raiting, post_user_raiting
 from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
@@ -31,6 +32,10 @@ urlpatterns = [
     path('my_tasks/', get_my_tasks),
     path('accepted_tasks/', get_my_accepted_tasks),
     path('task_a/', accept_task),
+
+    #raiting api
+    path('raiting/', get_user_raiting),
+    path('raiting_g/', post_user_raiting),
 
     #create user
     path('user_c/', create_user),

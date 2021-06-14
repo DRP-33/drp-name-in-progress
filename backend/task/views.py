@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core import serializers
+
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view,\
  authentication_classes, permission_classes
+ 
 from .models import Task
 from utils import is_valid_request
 # Create your views here.

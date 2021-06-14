@@ -54,6 +54,7 @@ INSTALLED_APPS = [
 
     #own
     'task',
+    'raiting',
 ]
 
 MIDDLEWARE = [
