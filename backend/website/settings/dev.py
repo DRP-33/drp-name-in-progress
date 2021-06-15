@@ -12,12 +12,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import django_heroku
-import environ
-
-env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, False)
-)
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -100,9 +94,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'website.wsgi.application'
 
-
-STREAM_API_KEY = env('STREAM_API_KEY') 
-STREAM_API_SECRET = env('STREAM_API_SECRET')
 DJOSER = {
     'SERIALIZERS': {
         'token': 'auth.serializers.StreamTokenSerializer',
