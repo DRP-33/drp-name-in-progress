@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls import path, include
 from task.views import add_task, get_tasks, accept_task, get_my_tasks, get_my_accepted_tasks
 from user.views import create_user
 from raiting.views import get_user_raiting, post_user_raiting
@@ -32,6 +33,10 @@ urlpatterns = [
     path('my_tasks/', get_my_tasks),
     path('accepted_tasks/', get_my_accepted_tasks),
     path('task_a/', accept_task),
+
+    #authorization
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.authtoken')),
 
     #raiting api
     path('raiting/', get_user_raiting),
