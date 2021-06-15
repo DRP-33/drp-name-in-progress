@@ -6,3 +6,4 @@ django-cors-headers == 3.7.0
 djangorestframework == 3.12.4
 stream-chat==3.8.0
 djoser==2.1.0
+environs==9.3.2

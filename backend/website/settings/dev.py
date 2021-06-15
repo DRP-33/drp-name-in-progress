@@ -12,12 +12,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import django_heroku
-import environ
+from environs import Env
 
-env = environ.Env(
-  DEBUG=(bool, False)
-)
-environ.Env.read_env()
+env = Env()
+env.read_env()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
