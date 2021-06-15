@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import django_heroku
-from environ import Env
+import environ
 
 env = environ.Env(
     # set casting, default value
