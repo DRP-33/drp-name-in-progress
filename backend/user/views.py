@@ -17,8 +17,8 @@ def create_user(request):
   if User.objects.filter(email=data['user_email']).exists():
     return HttpResponse('email already in use', status = 409)
 
-  user = User.objects.create_user(data['user_name'], data['user_email'],
-    data['user_password'])
+  user = User.objects.create_user(username=data['user_name'], email=data['user_email'],
+    password=data['user_password'])
   user.save()
 
   token = Token.objects.create(user = user)

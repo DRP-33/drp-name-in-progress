@@ -12,6 +12,13 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import django_heroku
+import environ
+
+env = environ.Env(
+  DEBUG=(bool, False)
+)
+environ.Env.read_env()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -52,6 +59,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
 
+    #chat
+    'djoser',
+
     #own
     'task',
     'raiting',
@@ -90,6 +100,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'website.wsgi.application'
 
+
+STREAM_API_KEY = env('STREAM_API_KEY') 
+STREAM_API_SECRET = env('STREAM_API_SECRET')
+DJOSER = {
+    'SERIALIZERS': {
+        'token': 'auth.serializers.StreamTokenSerializer',
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
