@@ -95,3 +95,23 @@ def accept_task(request):
   task.acceptor_id = acceptor_id
   task.save()
   return HttpResponse("OK", status=200)
+
+@api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def cancel_task(request):
+  required_fields = ['task_id']
+  request_data = request.POST
+
+  if not is_valid_request(request_data, required_fields):
+    return HttpResponse("missing data", status=400)
+
+  try:
+    task = Task.objects.get(pk=request_data['task_id'])
+    if task.requestor_id == request.user.id:
+      task.delete()
+      return HttpResponse('task deleted', status=200)
+    else:
+      return HttpResponse('you are not the owner of this task', status=403)
+  except Task.DoesNotExist:
+    return HttpResponse('not task with given id exists', status=404)
