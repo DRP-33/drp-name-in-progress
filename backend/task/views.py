@@ -125,7 +125,7 @@ def cancel_task(request):
 
   try:
     task = Task.objects.get(pk=request_data['task_id'])
-    if task.requestor_id == request.user.id:
+    if task.requestor_id == request.user.id or task.acceptor_id == request.user.id:
       task.delete()
       return HttpResponse('task deleted', status=200)
     else:
