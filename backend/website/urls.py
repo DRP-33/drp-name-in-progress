@@ -34,7 +34,7 @@ urlpatterns = [
     path('my_tasks/', get_my_tasks),
     path('accepted_tasks/', get_my_accepted_tasks),
     path('task_a/', accept_task),
-    path('task/cancel', cancel_task),
+    path('task/cancel/', cancel_task),
     path('task/', get_task),
 
     #authorization
