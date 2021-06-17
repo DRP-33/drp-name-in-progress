@@ -61,6 +61,23 @@ def add_task(request):
 def get_tasks(request):
   return HttpResponse(f"{serializers.serialize('json', Task.objects.all())}", status=200)
 
+@api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_task(request):
+  data = request.POST
+  required_data = ['task_id']
+
+  if not is_valid_request(data, required_data):
+    return HttpResponse("missing data", status=400)
+
+  try:
+    task = Task.objects.get(pk=data['task_id'])
+    serialized_tasks = serializers.serialize('json', task)
+    return HttpResponse(serialized_tasks, status=200)
+  except Task.DoesNotExist:
+    return HttpResponse("task with given id does not exist", status=400)
+
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
