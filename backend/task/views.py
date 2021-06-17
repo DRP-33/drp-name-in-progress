@@ -73,8 +73,8 @@ def get_task(request):
 
   try:
     task = Task.objects.get(pk=data['task_id'])
-    serialized_tasks = serializers.serialize('json', task)
-    return HttpResponse(serialized_tasks, status=200)
+    serialized_task = serializers.serialize('json', [task, ])
+    return HttpResponse(serialized_task, status=200)
   except Task.DoesNotExist:
     return HttpResponse("task with given id does not exist", status=400)
 
