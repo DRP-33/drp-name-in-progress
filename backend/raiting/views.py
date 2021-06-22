@@ -36,24 +36,24 @@ def post_user_raiting(request):
   if not is_valid_request(request_data, required_fields):
     return HttpResponse("missing data", status=400)
 
-  if request_data['score'] > 5 or request_data['score'] < 0:
+  if int(request_data['score']) > 5 or int(request_data['score']) < 0:
     return HttpResponse("invalid score value", status=400)
 
-  user_id = request.user.id
+  user_id = request_data['scored_id']
   raiting = get_or_create_user_raiting(user_id)
 
   if raiting.r_count == 0:
     raiting.r_score = request_data['score']
   else:
     count = raiting.r_count
-    new_score = (raiting.r_score * count + request_data['score']) / (count + 1)
+    new_score = (raiting.r_score * count + int(request_data['score'])) / (count + 1)
     raiting.r_score = new_score
   
   raiting.r_count += 1
 
   raiting.save()
 
-  serialized_raiting = serializers.serialize('json', raiting)
+  serialized_raiting = serializers.serialize('json', [raiting,])
   return HttpResponse(serialized_raiting, status=200)
 
 
